@@ -1,0 +1,11 @@
+/r/{{model.subreddit}}<br>
+
+{{#each posts as |info|}}
+    {{#if info.data}}
+        {{#light-box href=info.data.url data-lightbox=info.data.title data-title=info.data.title inlineImage=false}}
+            <div class="img" >
+                <img src="{{info.data.thumbnail}}" width="110" height="90" >
+            </div>
+        {{/light-box}}
+    {{/if}}
+{{/each}}
