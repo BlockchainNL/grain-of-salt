@@ -1,15 +1,21 @@
-/r/{{model.subreddit}}<br>
 
-original: {{originalBalance}}
-current: {{currentBalance}}
-coinbase {{coinbase}}
+{{#each posts as |post|}}
+		<div class="post" style="width:130px; height:auto; margin-bottom:20px">
+			<a href="https://reddit.com/{{post.permalink}}" target="_blank">{{post.title}}</a>
+			<div class="img" style="background-color:{{post.user.color}}; margin-bottom:5px" >
+		                <a href="https://reddit.com/{{post.permalink}}" target="_blank"><img src="{{post.thumbnail}}" width="110" height="90" ></a>
+	            </div>
+			{{#if post.user}}
+	        	
+	        	<br><br>
+	        	<a href="https://reddit.com/{{post.permalink}}" target="_blank">{{post.user.name}}</a>
+	        	
+	        	
+	        {{else}}
+	        	No user
+	        {{/if}}
+	       
+	            
+        </div>
 
-{{#each posts as |info|}}
-    {{#if info.data}}
-        {{#light-box href=info.data.url data-lightbox=info.data.title data-title=info.data.title inlineImage=false}}
-            <div class="img" >
-                <img src="{{info.data.thumbnail}}" width="110" height="90" >
-            </div>
-        {{/light-box}}
-    {{/if}}
 {{/each}}
