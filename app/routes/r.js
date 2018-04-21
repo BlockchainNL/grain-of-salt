@@ -25,16 +25,3 @@ export default Ember.Route.extend({
         r.subreddit = r.data.children[0].data.subreddit || '';
     }
 });
-
-
-/*import Ember from 'ember';
-
-import web3 from 'ember-web3/services/web3';
-export default Ember.Route.extend({
-  host:'http://127.0.0.1:8545',
-  web3:Ember.inject.service(),
-  model(){     
-    let web3 = new Web3(new Web3.providers.HttpProvider(host));
-    return web3.version;
-  }
-});*/
