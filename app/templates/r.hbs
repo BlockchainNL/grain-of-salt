@@ -1,5 +1,9 @@
 /r/{{model.subreddit}}<br>
 
+original: {{originalBalance}}
+current: {{currentBalance}}
+coinbase {{coinbase}}
+
 {{#each posts as |info|}}
     {{#if info.data}}
         {{#light-box href=info.data.url data-lightbox=info.data.title data-title=info.data.title inlineImage=false}}

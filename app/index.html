@@ -13,6 +13,15 @@
     <link integrity="" rel="stylesheet" href="{{rootURL}}assets/reddit.css">
 
     {{content-for "head-footer"}}
+
+    <script src="/assets/web3.min.js"></script>
+    <script type="text/javascript">
+   
+      // var Web3 = require('web3');
+      web3 = new Web3();
+      web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+     
+  </script>
   </head>
   <body>
     {{content-for "body"}}
