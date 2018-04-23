@@ -1,6 +1,6 @@
 # Grain of Salt
 
-This project is an attempt to combat the spread of fake news articles on social networks and encouraging people to take information with a grain of salt. The project is a clone of Reddit and uses the Reddit API to fetch post data. Scores are assigned to each post based on the credibility of the user. This score is then updated by a smart contract which also receives any new posts made by the user.
+This project is an attempt to combat the spread of fake news articles on social networks and encouraging people to take information with a grain of salt. The project is a clone of Reddit and uses the Reddit API to fetch post data. Scores are assigned to each post based on the credibility of the user. This score is then updated by a smart contract which also receives any new posts made by the user.The scores are used to generate a coloured border around each post ranging from green to read (trustworthy to untrustworthy.)
 
 ## Prerequisites
 
