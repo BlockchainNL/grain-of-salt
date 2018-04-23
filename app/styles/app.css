@@ -75,6 +75,7 @@ div.img {
     margin: 5px;
     padding: 5px;
     border: 1px solid #0000ff;
+    border-radius: 10px;
     height: auto;
     width: auto;
     float: left;
@@ -102,4 +103,8 @@ div.img2 {
     background-size: contain;
     background-position: 50% 50%;
     background-repeat: no-repeat;
+}
+
+.post {
+  /* background-color: */
 }
