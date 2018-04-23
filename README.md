@@ -24,7 +24,8 @@ You will need the following things properly installed on your computer.
 ## Running / Development
 
 * `ganache-cli`
-* open a new terminal and in the project root, run `ember serve`
+* `truffle compile && truffle migrate --reset`
+* Open a new terminal and in the project root, run `ember serve`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
