@@ -1,5 +1,7 @@
 /* globals web3 */
 import Ember from 'ember';
+// import GrainOfSaltContract from '../../build/contracts/GrainOfSalt.json';
+
 
 // import Web3 from 'ember-web3/index.js';
 const dataStore = window.localStorage;
@@ -9,9 +11,14 @@ const clientID = '123iPsWHl3DFqw'; //IMPORTANT - THIS NEEDS TO BE YOUR CLIENT ID
 
 const subreddits = ['android'];
 
+// let gosInstance;
+
 function authenticateReddit(){
 
 }
+
+
+// const gosSourceCode = "../../contracts/GrainOfSalt.sol";
 
 function init() {
  if (!dataStore.getItem('deviceID')) {
@@ -19,6 +26,39 @@ function init() {
  console.log('Created new deivce ID');
  }
  //grabStories();
+
+  /*const compiled = web3.eth.compile.solidity(gosSourceCode);
+  const code = compiled.code;
+  const abi = compiled.info.abiDefinition;*/
+
+  // const abi = '[{"anonymous":false,"inputs":[{"indexed":false,"name":"user","type":"bytes32"},{"indexed":false,"name":"post","type":"bytes32"}],"name":"AddedPost","type":"event"},{"constant":false,"inputs":[{"name":"name","type":"bytes32"},{"name":"post","type":"bytes32"}],"name":"addPost","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"name","type":"bytes32"},{"indexed":false,"name":"score","type":"uint256"}],"name":"UpdatedScore","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"name","type":"bytes32"}],"name":"AddedUser","type":"event"},{"constant":false,"inputs":[{"name":"name","type":"bytes32"}],"name":"addUser","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":false,"inputs":[{"name":"name","type":"bytes32"},{"name":"score","type":"uint256"}],"name":"updateScore","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"name","type":"bytes32"}],"name":"getPosts","outputs":[{"name":"","type":"bytes32[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"lastUpdated","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"scoreOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"users","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}]';
+
+  // let gosContract;
+
+  // web3.eth.contract(abi).new({data: code}, function(err, contract) {
+  // web3.eth.contract(abi).new(function(err, contract) {
+  //   if(err) {
+  //      console.log(err);
+  //      return;
+  //   } else if(contract.address) {
+  //       gosContract = contract;
+  //       console.log("address: "+gosContract.address);
+  //       // controller.set("address",gosContract.address);
+  //   }
+  // });
+
+  // const gosContract = new web3.eth.Contract(abi);
+  // gosContract.deploy()
+  //            .on('error', function(error) {console.log(error)})
+  //            .then(function(instance) {console.log(instance.options.address)});
+
+  // const contract = require('truffle-contract');
+  // const gosContract = contract(GrainOfSaltContract);
+  // gosContract.setProvider(web3.currentprovider);
+
+  // gosContract.deployed().then(function(instance) {
+  //   gosInstance = instance;
+  // });
 }
 
 function getRandomID() {
@@ -167,6 +207,7 @@ export default Ember.Route.extend({
      setupController: function(controller, model, obj) {
         redditPromise('r',obj.params.r.subreddit).then(function(r){
             controller.set("model",r);
+            controller.initContract();
             r.subreddit = r.data.children[0].data.subreddit || '';
             var posts = controller.get("posts");
             var users = controller.get("users");

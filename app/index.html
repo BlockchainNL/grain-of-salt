@@ -15,18 +15,30 @@
     {{content-for "head-footer"}}
 
     <script src="/assets/web3.min.js"></script>
+    <script src="/assets/truffle-contract.min.js"></script>
     <script type="text/javascript">
    
       web3 = new Web3();
-      web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
-      // if(typeof web3 !== "undefined" && typeof web3.currentProvider !== "undefined") {
-      //   web3 = new Web3(web3.currentProvider);
-      // } else {
-      //   web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-      // }
+      // web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+      if(typeof web3 !== "undefined" && typeof web3.currentProvider !== "undefined") {
+        web3 = new Web3(web3.currentProvider);
+      } else {
+        web3 = new Web3(new web3.providers.HttpProvider("http://localhost:8545"));
+      }
+
+      contract = new TruffleContract();
+      // GrainOfSaltContract = $.getJSON('https://gist.github.com/ToJen/6cc6d05c2f60935da94cfb04c9566476', function(data) {
+      //   return data;
+      // });
   </script>
   </head>
   <body>
+    <h1>Grain of Salt</h1>
+    <p>
+      This project is an attempt to combat the spread of fake news articles on social networks and encouraging people to take information with a <strong>grain of salt</strong>.
+    </p>
+    <br/>
+
     {{content-for "body"}}
 
     <script src="{{rootURL}}assets/vendor.js"></script>

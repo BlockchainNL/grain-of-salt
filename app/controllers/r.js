@@ -2,6 +2,8 @@
 import Ember from 'ember';
 var denominator = 100;
 
+let gosInstance;
+
 function perc2color(perc) {
     var r, g, b = 0;
     if(perc < 50) {
@@ -16,9 +18,70 @@ function perc2color(perc) {
     return '#' + ('000000' + h.toString(16)).slice(-6);
 }
 
+function contractArtifactPromise(){
+    return  new Ember.RSVP.Promise(function(resolve, reject){
+          // succeed
+            $.getJSON('/assets/GrainOfSalt.json', function(artifact) {
+                 resolve(artifact);
+            });
+          
+          // or reject
+        
+        });
+
+}
+
 export default Ember.Controller.extend({  
     users:Ember.A(),
     posts:Ember.A(),
+    initContract:function(){
+
+        // const GrainOfSaltContract = Ember.$.getJSON('GrainOfSalt.json');
+        // $.getJSON('GrainOfSalt.json');
+        /*const compiled = web3.eth.compile.solidity(gosSourceCode);
+        const code = compiled.code;
+        const abi = compiled.info.abiDefinition;*/
+
+        // const abi = '[{"anonymous":false,"inputs":[{"indexed":false,"name":"user","type":"bytes32"},{"indexed":false,"name":"post","type":"bytes32"}],"name":"AddedPost","type":"event"},{"constant":false,"inputs":[{"name":"name","type":"bytes32"},{"name":"post","type":"bytes32"}],"name":"addPost","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"name","type":"bytes32"},{"indexed":false,"name":"score","type":"uint256"}],"name":"UpdatedScore","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"name","type":"bytes32"}],"name":"AddedUser","type":"event"},{"constant":false,"inputs":[{"name":"name","type":"bytes32"}],"name":"addUser","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":false,"inputs":[{"name":"name","type":"bytes32"},{"name":"score","type":"uint256"}],"name":"updateScore","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"name","type":"bytes32"}],"name":"getPosts","outputs":[{"name":"","type":"bytes32[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"lastUpdated","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"scoreOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"users","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}]';
+
+        // let gosContract;
+
+        // web3.eth.contract(abi).new({data: code}, function(err, contract) {
+        // web3.eth.contract(abi).new(function(err, contract) {
+        //   if(err) {
+        //      console.log(err);
+        //      return;
+        //   } else if(contract.address) {
+        //       gosContract = contract;
+        //       console.log("address: "+gosContract.address);
+        //       // controller.set("address",gosContract.address);
+        //   }
+        // });
+
+        // const gosContract = new web3.eth.Contract(abi);
+        // gosContract.deploy()
+        //            .on('error', function(error) {console.log(error)})
+        //            .then(function(instance) {console.log(instance.options.address)});
+
+        // const contract = require('npm:truffle-contract');
+        // const GrainOfSaltContract = 
+        // $.getJSON('/assets/GrainOfSalt.json', function(data) {
+        //     console.log(data);
+        //     return data;
+        // });
+
+        contractArtifactPromise().then(function(data) {
+            console.log(data);
+            const gosContract = contract(data);
+            gosContract.setProvider(web3.currentprovider);
+            // console.log(gosContract);
+            gosContract.deployed().then(function(instance) {
+                // console.log("got here")
+                gosInstance = instance;
+                // console.log(gosInstance);
+            }); 
+        });
+    },
     getUserScore:function(user){
         var blockscore = this.getBlockScore(user.get("name"));
         var expire = 1*60*60*1000; // 1 hour;
@@ -41,14 +104,17 @@ export default Ember.Controller.extend({
         })
     },
     writeToBlock(score){
-
+        // gosInstance.updateScore(score);
     },
     getBlockScore:function(username){
         var score= Math.floor((Math.random() * 100) + 1);
         var postscount = Math.floor((Math.random() * 10) + 1);
         var datetime = Date.now();
+
+        // var _score = gosInstance.scoreOf(username);
         return Ember.Object.create({
             score:score,
+            // score:_score,
             postscount:postscount,
             datetime
         });
@@ -63,7 +129,7 @@ export default Ember.Controller.extend({
             var color=perc2color(percent);
             obj.set("color", color)
             this.get("users").addObject(obj);
-
+            // gosInstance.addUser(existingUser);
         }
     },
     addPost:function(obj){
@@ -71,6 +137,7 @@ export default Ember.Controller.extend({
             var existingPost = this.getPost(obj.get("id"));
             if(Ember.isEmpty(existingPost)){
                 this.get("posts").addObject(obj);
+                // gosInstance.addPost(existingPost);
             }    
         }else{
             var x = 3;
@@ -89,9 +156,11 @@ export default Ember.Controller.extend({
     //     return null;
     // },
     getUser:function(id){
+        // gosInstance.users(this.getObj(id,"user"));
         return this.getObj(id,"user");
     },
     getPost:function(id){
+        // gosInstance.getPosts(this.getObj(id,"post"));
         return this.getObj(id,"post");
     },
     getObj:function(id,type){
