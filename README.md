@@ -15,8 +15,10 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd reddit`
+* Clone this repository
+  * `git clone git@github.com:BlockchainNL/grain-of-salt.git` or
+  * `git clone https://github.com/BlockchainNL/grain-of-salt.git`
+* `cd grain-of-salt`
 * `npm install`
 
 ## Running / Development
